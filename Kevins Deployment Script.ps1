@@ -16,7 +16,6 @@ $loc = "East US 2"
 $rnd = Read-Host -Prompt "Please type some number for creating unique names, and then press ENTER."
 
 $rgName = 'TestScaleSet' + $rnd
-
 $autoAccountName = 'myAutomation' + $rnd
 
 New-AzureRmResourcegroup -Name $rgName -Location $loc -Verbose
@@ -41,6 +40,7 @@ $assetLocation = "https://raw.githubusercontent.com/KevinRemde/NTestDSC/master/"
 $configuration = "AxonWebServer.ps1"
 $configurationName = "AxonWebServer"
 $configurationURI = $assetLocation + $configuration
+
 $moduleName = "xNetworking"
 $moduleURI = $assetLocation + $moduleName + ".zip"
 
