@@ -162,6 +162,20 @@
                 "description": "The URI for the DSC configuration "
             }
         },
+        "moduleName" : {
+          "type": "string",
+          "defaultValue": "xNetworking",
+          "metadata": {
+            "description": "The name of the  DSC Module"
+          }
+        },
+        "moduleURI" : {
+          "type": "string",
+          "defaultValue": "https://raw.github.com/Azure/azure-quickstart-templates/master/201-vmss-automation-dsc/xNetworking.zip",
+          "metadata": {
+            "description": "The URI for additional DSC Module"
+          }
+        },
         "configurationDescription": {
             "type": "string",
             "defaultValue": "Web Server",
@@ -236,8 +250,8 @@
         "dscOverwrite": "true",
         "dscModules": {
             "xNetworking": {
-                "moduleName": "xNetworking",
-                "moduleUri": "https://raw.github.com/Azure/azure-quickstart-templates/master/201-vmss-automation-dsc/xNetworking.zip"
+                "moduleName": "[parameters('moduleName')]",
+                "moduleUri": "[parameters('moduleURI')]"
             }
         },
         "autoScaleWAD": "[concat(variables('namingInfix'), 'autoScale')]",
@@ -706,10 +720,6 @@
     "outputs": {
 		"fqdn": {
 			"value": "[reference(variables('publicIPAddressID'),providers('Microsoft.Network','publicIPAddresses').apiVersions[0]).dnsSettings.fqdn]",
-			"type": "string"
-		},
-		"ipaddress": {
-			"value": "[reference(variables('publicIPAddressID'),providers('Microsoft.Network','publicIPAddresses').apiVersions[0]).ipAddress]",
 			"type": "string"
 		}
 	}
