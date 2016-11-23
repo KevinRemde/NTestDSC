@@ -166,7 +166,7 @@
           "type": "string",
           "defaultValue": "xNetworking",
           "metadata": {
-            "description": "The name of the  DSC Module"
+            "description": "The name of the DSC Module"
           }
         },
         "moduleURI" : {
@@ -422,7 +422,7 @@
                 "backendAddressPool": {
                   "id": "[variables('backendAddressPoolID')]"
                 },
-                "protocol": "tcp",
+                "protocol": "Tcp",
                 "frontendPort": 80,
                 "backendPort": 80,
                 "enableFloatingIP": false,
@@ -437,7 +437,7 @@
             {
               "name": "[variables('httpProbeName')]",
               "properties": {
-                "protocol": "http",
+                "protocol": "Http",
                 "port": 80,
                 "intervalInSeconds": 5,
                 "numberOfProbes": 2,
@@ -619,7 +619,7 @@
                 {
                   "name": "[variables('nicName')]",
                   "properties": {
-                    "primary": "true",
+                    "primary": "True",
                     "ipConfigurations": [
                       {
                         "name": "[variables('ipConfigName')]",

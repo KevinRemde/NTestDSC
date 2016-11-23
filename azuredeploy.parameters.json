@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "domainNamePrefix": {
-            "value": "kardsc"
+            "value": "nexdsc"
         },
         "vmssName": {
-            "value": "kardsc"
+            "value": "webdsc"
         },
         "adminUsername": {
             "value": "kevin"

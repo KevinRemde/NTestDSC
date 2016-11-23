@@ -50,7 +50,9 @@ New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgNa
     -registrationKey ($RegistrationInfo.PrimaryKey | ConvertTo-SecureString -AsPlainText -Force) `
     -registrationUr $RegistrationInfo.Endpoint `
     -automationAccountName $autoAccountName `
-    -jobid $NewGUID -Verbose `
+    -jobid $NewGUID `
+    -moduleName $moduleName `
+    -moduleURI $moduleURI `
     -configurationURI $configurationURI `
-    -moduleName = $moduleName `
-    -moduleURI = $moduleURI
+    -Verbose 
+    
