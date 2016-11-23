@@ -1,4 +1,5 @@
 ﻿# Login-AzureRmAccount
+#
 
 $azureAccount = "KevRem Azure"
 # $azureAccount = "Visual Studio Ultimate with MSDN"
@@ -11,7 +12,7 @@ Get-AzureRmSubscription -SubscriptionName $azureAccount | Select-AzureRmSubscrip
 $loc = "East US 2"
 
 # collect digits for generating unique names
-
+#
 $rnd = Read-Host -Prompt "Please type some number for creating unique names, and then press ENTER."
 
 $rgName = 'TestScaleSets' + $rnd
