@@ -1,22 +1,31 @@
-﻿# Login-AzureRmAccount
+﻿# EDIT THIS!
+# Put your subscription name in a variable.  
+# This is really only needed if your credentials are authorized to access multiple subscriptions.  
+# If you only have one subscription, a simple "Login-AzureRmAccount" command will suffice.
 #
 
 $azureAccount = "KevRem Azure"
 # $azureAccount = "Visual Studio Ultimate with MSDN"
 
+# Login
 Login-AzureRmAccount
 Get-AzureRmSubscription -SubscriptionName $azureAccount | Select-AzureRmSubscription 
 
+# EDIT THIS!
+# Set the path to where you've cloned the NTestDSC contents.
+# Important: Make sure the path ends with the "\", as in "C:\Code\MyGitHub\NTestDSC\"
+$localAssets = "C:\Code\MyGitHub\NTestDSC\"
 
-
+# Datacenter Region you want to use.  
+# Note that some regions don't yet support Azure Automation. You'll get an error if you pick one of those.
 $loc = "East US 2"
 
-# collect digits for generating unique names
+# Collect digit(s) for generating unique names
 #
 $rnd = Read-Host -Prompt "Please type some number for creating unique names, and then press ENTER."
 
-$rgName = 'TestScaleSet' + $rnd
-$autoAccountName = 'myAutomation' + $rnd
+$rgName = 'RG-WebScaleSet' + $rnd
+$autoAccountName = 'webAutomation' + $rnd
 
 New-AzureRmResourcegroup -Name $rgName -Location $loc -Verbose
 
@@ -27,9 +36,8 @@ $RegistrationInfo = Get-AzureRmAutomationRegistrationInfo -ResourceGroupName $rg
 $NewGUID = [system.guid]::newguid().guid
 
 
-# Use these if you want to drive the deployment from local template and parameter files..
+# Setup variables for the local template and parameter files..
 #
-$localAssets = "C:\Code\MyGitHub\NTestDSC\"
 $templateFileLoc = $localAssets + "azuredeploy.json"
 $parameterFileLoc = $localAssets + "azuredeploy.parameters.json"
 
@@ -59,8 +67,8 @@ while ($uniqueName -eq $false) {
 
 
 New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
-    -TemplateFile .\azuredeploy.json `
-    -TemplateParameterFile .\azuredeploy.parameters.json `
+    -TemplateFile $templateFileLoc `
+    -TemplateParameterFile $parameterFileLoc `
     -domainNamePrefix $dnsPrefix `
     -registrationKey ($RegistrationInfo.PrimaryKey | ConvertTo-SecureString -AsPlainText -Force) `
     -registrationUr $RegistrationInfo.Endpoint `
@@ -74,5 +82,3 @@ New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgNa
 
 
 # Remove-AzureRmResourceGroup -Name $rgName -Force
-
-    
