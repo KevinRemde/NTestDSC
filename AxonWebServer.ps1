@@ -11,7 +11,7 @@ Configuration AxonWebServer
         [string[]]$NodeName = 'localhost' 
     ) 
 
-    Import-DscResource –ModuleName 'PSDesiredStateConfiguration'
+    Import-DscResource –ModuleName PSDesiredStateConfiguration, xNetworking
 
     Node $NodeName
     {
@@ -51,6 +51,20 @@ Configuration AxonWebServer
             Ensure          = "Present" 
             Name            = "Web-Mgmt-Console"
         }
+        
+        xFirewall HTTP
+		{
+			Name = 'WebServer-HTTP-In-TCP'
+			Group = 'Web Server'
+			Ensure = 'Present'
+			Action = 'Allow'
+			Enabled = 'True'
+			Profile = 'Any'
+			Direction = 'Inbound'
+			Protocol = 'TCP'
+			LocalPort = 80
+			DependsOn = '[WindowsFeature]webServer'
+		}
 
         Package UrlRewrite
 		{
