@@ -15,7 +15,7 @@ $loc = "East US 2"
 #
 $rnd = Read-Host -Prompt "Please type some number for creating unique names, and then press ENTER."
 
-$rgName = 'TestScaleSets' + $rnd
+$rgName = 'TestScaleSet' + $rnd
 
 $autoAccountName = 'myAutomation' + $rnd
 
@@ -38,6 +38,8 @@ $parameterFileLoc = $localAssets + "azuredeploy.parameters.json"
 #
 $assetLocation = "https://raw.githubusercontent.com/KevinRemde/NTestDSC/master/"
 
+$configuration = "AxonWebServer.ps1"
+$configurationURI = $assetLocation + $configuration
 $moduleName = "xNetworking"
 $moduleURI = $assetLocation + $moduleName + ".zip"
 
@@ -49,5 +51,6 @@ New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgNa
     -registrationUr $RegistrationInfo.Endpoint `
     -automationAccountName $autoAccountName `
     -jobid $NewGUID -Verbose `
+    -configurationURI $configurationURI `
     -moduleName = $moduleName `
     -moduleURI = $moduleURI
