@@ -1,0 +1,33 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "domainNamePrefix": {
+            "value": "kardsc"
+        },
+        "vmssName": {
+            "value": "kardsc"
+        },
+        "adminUsername": {
+            "value": "kevin"
+        },
+        "adminPassword": {
+            "value": "Passw0rd!"
+        },
+        "registrationKey": {
+            "value": "changeMe_AzureAutomationRegistrationKey"
+        },
+        "registrationUrl": {
+            "value": "changeMe_AzureAutomationRegistrationUrl"
+        },
+        "jobid": {
+            "value": "GEN-UNIQUE-32"
+        },
+        "instanceCount": {
+            "value": 3
+        },
+        "timestamp": {
+            "value": "MM/dd/yyyy H:mm:ss tt"
+        }
+    }
+}
