@@ -5,15 +5,9 @@
 
 Configuration AxonWebServer
 {
-    param 
-    ( 
-        # Target nodes to apply the configuration 
-        [string[]]$NodeName = 'localhost' 
-    ) 
-
     Import-DscResource –ModuleName PSDesiredStateConfiguration, xNetworking
 
-    Node $NodeName
+    Node localhost
     {
         # Install the IIS role 
         WindowsFeature IIS 

@@ -45,8 +45,8 @@ $parameterFileLoc = $localAssets + "azuredeploy.parameters.json"
 #
 $assetLocation = "https://raw.githubusercontent.com/KevinRemde/NTestDSC/master/"
 
-$configuration = "AxonWebServer.ps1"
-$configurationName = "AxonWebServer"
+$configuration = "WebServer.ps1"
+$configurationName = "MyService"
 $configurationURI = $assetLocation + $configuration
 
 $moduleName = "xNetworking"
