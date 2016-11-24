@@ -3,7 +3,7 @@
 # - better yet -
 #Enable-PSRemoting
 
-Configuration AxonWebServer
+Configuration webServer
 {
     Import-DscResource –ModuleName PSDesiredStateConfiguration, xNetworking
 
@@ -57,7 +57,7 @@ Configuration AxonWebServer
 			Direction = 'Inbound'
 			Protocol = 'TCP'
 			LocalPort = 80
-			DependsOn = '[WindowsFeature]webServer'
+			DependsOn = '[WindowsFeature]IIS'
 		}
 
         Package UrlRewrite
