@@ -45,8 +45,9 @@ $parameterFileLoc = $localAssets + "azuredeploy.parameters.json"
 #
 $assetLocation = "https://raw.githubusercontent.com/KevinRemde/NTestDSC/master/"
 
-$configuration = "WebServer.ps1"
-$configurationName = "MyService"
+$configuration = "AxonWebServer.ps1"
+$configurationName = "AxonWebServer"
+$nodeConfigurationName = $configurationName + ".localhost"
 $configurationURI = $assetLocation + $configuration
 
 $moduleName = "xNetworking"
@@ -58,11 +59,11 @@ $machine = "nex"
 $uniquename = $false
 $counter = 0
 while ($uniqueName -eq $false) {
-    $counter ++
     $dnsPrefix = "$machine" + "dns" + "$rnd" + "$counter" 
     if (Test-AzureRmDnsAvailability -DomainNameLabel $dnsPrefix -Location $loc) {
         $uniquename = $true
     }
+    $counter ++
 } 
 
 
@@ -74,6 +75,7 @@ New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgNa
     -registrationUr $RegistrationInfo.Endpoint `
     -automationAccountName $autoAccountName `
     -jobid $NewGUID `
+    -nodeConfigurationName $nodeConfigurationName `
     -moduleName $moduleName `
     -moduleURI $moduleURI `
     -configurationName $configurationName `
