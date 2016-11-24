@@ -13,7 +13,7 @@ Configuration ConfigureLCMforAAPull
             
         [Int]$ConfigurationModeFrequencyMins = 15,
             
-        [String]$ConfigurationMode = "ApplyAndMonitor",
+        [String]$ConfigurationMode = "ApplyAndAutoCorrect",
             
         [String]$NodeConfigurationName,
 
