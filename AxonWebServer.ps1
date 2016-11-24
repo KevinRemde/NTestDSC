@@ -3,7 +3,7 @@
 # - better yet -
 #Enable-PSRemoting
 
-Configuration webServer
+Configuration AxonWebServer
 {
     Import-DscResource –ModuleName PSDesiredStateConfiguration, xNetworking
 
