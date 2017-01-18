@@ -11,9 +11,6 @@
         "adminUsername": {
             "value": "kevin"
         },
-        "adminPassword": {
-            "value": "Passw0rd!"
-        },
         "registrationKey": {
             "value": "changeMe_AzureAutomationRegistrationKey"
         },

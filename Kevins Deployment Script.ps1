@@ -3,7 +3,6 @@
 # This is really only needed if your credentials are authorized to access multiple subscriptions.  
 # If you only have one subscription, a simple "Login-AzureRmAccount" command will suffice.
 #
-
 $azureAccount = "KevRem Azure"
 # $azureAccount = "Visual Studio Ultimate with MSDN"
 
@@ -14,7 +13,7 @@ Get-AzureRmSubscription -SubscriptionName $azureAccount | Select-AzureRmSubscrip
 # EDIT THIS!
 # Set the path to where you've cloned the NTestDSC contents.
 # Important: Make sure the path ends with the "\", as in "C:\Code\MyGitHub\NTestDSC\"
-$localAssets = "C:\Code\MyGitHub\NTestDSC\"
+# $localAssets = "C:\Code\MyGitHub\NTestDSC\"
 
 # Datacenter Region you want to use.  
 # Note that some regions don't yet support Azure Automation. You'll get an error if you pick one of those.
@@ -35,15 +34,17 @@ $RegistrationInfo = Get-AzureRmAutomationRegistrationInfo -ResourceGroupName $rg
 
 $NewGUID = [system.guid]::newguid().guid
 
-
-# Setup variables for the local template and parameter files..
-#
-$templateFileLoc = $localAssets + "azuredeploy.json"
-$parameterFileLoc = $localAssets + "azuredeploy.parameters.json"
-
 # This deployment requires pulling remote files, either from Azure Storage (Shared Access Signature) or from a URL like Github.
 #
 $assetLocation = "https://raw.githubusercontent.com/KevinRemde/NTestDSC/master/"
+
+# Setup variables for the local template and parameter files..
+#
+# $templateFileLoc = $localAssets + "azuredeploy.json"
+# $parameterFileLoc = $localAssets + "azuredeploy.parameters.json"
+
+$templateFileLoc = $assetLocation + "azuredeploy.json"
+$parameterFileLoc = $assetLocation + "azuredeploy.parameters.json"
 
 $configuration = "AxonWebServer.ps1"
 $configurationName = "AxonWebServer"
@@ -55,7 +56,7 @@ $moduleURI = $assetLocation + $moduleName + ".zip"
 
 # Get a unique DNS name
 #
-$machine = "nex"
+$machine = "kar"
 $uniquename = $false
 $counter = 0
 while ($uniqueName -eq $false) {
@@ -66,10 +67,12 @@ while ($uniqueName -eq $false) {
     $counter ++
 } 
 
-
+#
+# For this deployment I use the local template file, the local parameter file, and additional parameters in the command.
+# 
 New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
-    -TemplateFile $templateFileLoc `
-    -TemplateParameterFile $parameterFileLoc `
+    -TemplateParameterUri $parameterFileLoc `
+    -TemplateUri $templateFileLoc `
     -domainNamePrefix $dnsPrefix `
     -registrationKey ($RegistrationInfo.PrimaryKey | ConvertTo-SecureString -AsPlainText -Force) `
     -registrationUr $RegistrationInfo.Endpoint `
@@ -82,5 +85,6 @@ New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgNa
     -configurationURI $configurationURI `
     -Verbose 
 
-
+# later if you want, you can easily remove the resource group and all objects it contains.
+#
 # Remove-AzureRmResourceGroup -Name $rgName -Force
