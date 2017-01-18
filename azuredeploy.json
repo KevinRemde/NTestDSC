@@ -129,7 +129,6 @@
         },
         "automationAccountName": {
             "type": "string",
-            "defaultValue": "myAutomationAccount",
             "metadata": {
                 "description": "The name of the Automation account to use.  Check the SKU and tags to make sure they match the existing account."
             }
