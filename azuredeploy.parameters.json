@@ -25,9 +25,6 @@
         },
         "timestamp": {
             "value": "MM/dd/yyyy H:mm:ss tt"
-        },
-        "adminPassword": {
-            "value": "Passw0rd!"
         }
     }
 }

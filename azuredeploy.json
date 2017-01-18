@@ -47,7 +47,8 @@
             "type": "securestring",
             "metadata": {
                 "description": "Admin password on all VMs."
-            }
+            },
+            "defaultValue": "Passw0rd!"
         },
         "registrationKey": {
             "type": "securestring",
