@@ -68,14 +68,14 @@ while ($uniqueName -eq $false) {
 } 
 
 #
-# For this deployment I use the local template file, the local parameter file, and additional parameters in the command.
+# For this deployment I use the github-based template file, parameter file, and additional parameters in the command.
 # 
 New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
     -TemplateParameterUri $parameterFileLoc `
     -TemplateUri $templateFileLoc `
     -domainNamePrefix $dnsPrefix `
     -registrationKey ($RegistrationInfo.PrimaryKey | ConvertTo-SecureString -AsPlainText -Force) `
-    -registrationUr $RegistrationInfo.Endpoint `
+    -registrationUrl $RegistrationInfo.Endpoint `
     -automationAccountName $autoAccountName `
     -jobid $NewGUID `
     -nodeConfigurationName $nodeConfigurationName `
