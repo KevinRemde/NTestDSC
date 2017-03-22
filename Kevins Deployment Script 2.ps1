@@ -10,6 +10,7 @@ $azureAccount = "KevRem Azure"
 Login-AzureRmAccount
 Get-AzureRmSubscription -SubscriptionName $azureAccount | Select-AzureRmSubscription 
 
+
 # EDIT THIS!
 # Set the path to where you've cloned the NTestDSC contents.
 # Important: Make sure the path ends with the "\", as in "C:\Code\MyGitHub\NTestDSC\"
@@ -25,6 +26,7 @@ $unique = Read-Host -Prompt "Please type some number for creating unique names, 
 
 $rgName = 'RG-WebScaleSet' + $unique
 $autoAccountName = 'webAutomation' + $unique
+$dscname = "dsc" + $unique
 
 New-AzureRmResourcegroup -Name $rgName -Location $loc -Verbose
 
@@ -37,16 +39,17 @@ $NewGUID = [system.guid]::newguid().guid
 
 # This deployment requires pulling remote files, either from Azure Storage (Shared Access Signature) or from a URL like Github.
 #
-$localAssets = "C:\Code\MyGitHub\NTestDSC\"
+# $localAssets = "C:\Code\MyGitHub\NTestDSC\"
 $assetLocation = "https://raw.githubusercontent.com/KevinRemde/NTestDSC/master/"
 
 # Setup variables for the local template and parameter files..
 #
-$templateFileLoc = $localAssets + "azuredeploy.json"
-$parameterFileLoc = $localAssets + "azuredeploy.parameters.json"
+# $templateFileLoc = $localAssets + "azuredeploy.json"
+# $parameterFileLoc = $localAssets + "azuredeploy.parameters.json"
 
-#$templateFileLoc = $assetLocation + "azuredeploy.json"
-#$parameterFileLoc = $assetLocation + "azuredeploy.parameters.json"
+$templateFileLoc = $assetLocation + "azuredeploy.json"
+# Not using a parameter file in this sample.
+# $parameterFileLoc = $assetLocation + "azuredeploy.parameters.json"
 
 $configuration = "AxonWebServer.ps1"
 $configurationName = "AxonWebServer"
@@ -72,7 +75,7 @@ while ($uniqueName -eq $false) {
 
 $parameterObject = @{
     "domainNamePrefix" = $dnsPrefix
-    "vmssname" = "webdsc"
+    "vmssname" = $dscname
     "adminUserName" = "kevin"
     "registrationKey" = "$RegistrationKey"
     "registrationUrl" = $RegistrationInfo.Endpoint 
@@ -89,20 +92,23 @@ $parameterObject = @{
 #
 # For this deployment I use the local template file, and additional parameters in the command.
 # 
+<#
 New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
     -TemplateFile $templateFileLoc `
     -TemplateParameterObject $parameterObject `
-    -Verbose 
-
-<#
-# For this deployment I use the github-based template file, parameter file, and additional parameters in the command.
-# 
-New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
-    -TemplateFile $templateFileUri `
-    -TemplateParameterObject $parameterObject `
+    -registrationKey ($RegistrationInfo.PrimaryKey | ConvertTo-SecureString -AsPlainText -Force) `
+    -jobid $NewGUID `
     -Verbose 
 #>
 
+# For this deployment I use the github-based template file, parameter file, and additional parameters in the command.
+# 
+New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
+    -TemplateUri $templateFileLoc `
+    -TemplateParameterObject $parameterObject `
+    -Verbose 
+
+
 # later if you want, you can easily remove the resource group and all objects it contains.
 #
-# Remove-AzureRmResourceGroup -Name $rgName -Force
+# Remove-AzureRmResourceGroup -Name $rgName -Force 
