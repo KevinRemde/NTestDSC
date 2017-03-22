@@ -77,7 +77,6 @@ $parameterObject = @{
     "domainNamePrefix" = $dnsPrefix
     "vmssname" = $dscname
     "adminUserName" = "kevin"
-    "registrationKey" = "$RegistrationKey"
     "registrationUrl" = $RegistrationInfo.Endpoint 
     "jobid" = "$NewGUID"
     "instanceCount" = 3
@@ -97,7 +96,6 @@ New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgNa
     -TemplateFile $templateFileLoc `
     -TemplateParameterObject $parameterObject `
     -registrationKey ($RegistrationInfo.PrimaryKey | ConvertTo-SecureString -AsPlainText -Force) `
-    -jobid $NewGUID `
     -Verbose 
 #>
 
@@ -106,6 +104,7 @@ New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgNa
 New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
     -TemplateUri $templateFileLoc `
     -TemplateParameterObject $parameterObject `
+    -registrationKey ($RegistrationInfo.PrimaryKey | ConvertTo-SecureString -AsPlainText -Force) `
     -Verbose 
 
 
