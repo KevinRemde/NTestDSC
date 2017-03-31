@@ -1,25 +1,4 @@
 ﻿# Login
-<#
-$loggedIn = $false 
-$subscriptionId = $null
-While (-not $loggedIn) {
-    try {
-        if ($subscriptionId = 
-                ( Get-AzureRmSubscription |
-                    Out-GridView `
-                        -Title "Select an Azure Subscription ..." `
-                        -PassThru
-                ).SubscriptionId
-            )
-            {
-                $loggedIn = $true
-            }
-        }
-    catch {
-        Write-Output "Try again.."
-        }
-}
-#>
 
 Login-AzureRmAccount
 
