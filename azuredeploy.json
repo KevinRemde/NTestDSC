@@ -148,7 +148,7 @@
             }
         },
         "assetLocation": {
-          "type": "String",
+          "type": "string",
           "metadata": {
               "description": "The location where remote assets are to be found."
           }

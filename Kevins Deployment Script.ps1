@@ -22,6 +22,7 @@ While (-not $loggedIn) {
 #>
 
 Login-AzureRmAccount
+
 $subscriptionId = 
     ( Get-AzureRmSubscription |
         Out-GridView `
@@ -113,7 +114,7 @@ $parameterObject = @{
 #
 # For this deployment I use the local template file, and additional parameters in the command.
 # 
-
+<#
 New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
     -TemplateFile $templateFileLoc `
     -TemplateParameterObject $parameterObject `
@@ -123,13 +124,13 @@ New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgNa
 
 # For this deployment I use the github-based template file and additional parameters in the command.
 # 
-<#
+
 New-AzureRmResourceGroupDeployment -Name TestDeployment -ResourceGroupName $rgName `
     -TemplateUri $templateFileURI `
     -TemplateParameterObject $parameterObject `
     -registrationKey ($RegistrationInfo.PrimaryKey | ConvertTo-SecureString -AsPlainText -Force) `
     -Verbose 
-#>
+
 
 # later if you want, you can easily remove the resource group and all objects it contains.
 #
